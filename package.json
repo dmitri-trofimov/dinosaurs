@@ -1,0 +1,28 @@
+{
+  "name": "dinosaurs",
+  "version": "1.0.0",
+  "description": "Contains HTML pages with dinosaurs for printing for my kids.",
+  "homepage": "https://github.com/dmitri-trofimov/dinosaurs#readme",
+  "bugs": {
+    "url": "https://github.com/dmitri-trofimov/dinosaurs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmitri-trofimov/dinosaurs.git"
+  },
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsx scripts/build-pdf.ts"
+  },
+  "devDependencies": {
+    "@types/node": "25.6.0",
+    "cheerio": "1.2.0",
+    "puppeteer": "24.42.0",
+    "sharp": "0.34.5",
+    "tsx": "4.21.0",
+    "typescript": "6.0.3"
+  }
+}
