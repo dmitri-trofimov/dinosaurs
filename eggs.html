@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Яйца динозавров</title>
+    <style>
+      @page {
+        size: A4 portrait;
+        margin: 5mm;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        width: 100%;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+      }
+
+      .sheet {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+      }
+
+      .cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .egg {
+        width: 85%;
+        aspect-ratio: 3 / 4;
+        border-radius: 50% 50% 48% 48% / 58% 58% 42% 42%;
+        border: 1.2mm solid #8a8a8a;
+        background: #fffdfa;
+        padding: 4mm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .egg img {
+        width: 91%;
+        height: 91%;
+        object-fit: contain;
+        display: block;
+      }
+
+      @media screen {
+        body {
+          overflow: auto;
+          background: #f3f3f3;
+        }
+
+        .sheet {
+          width: 100vw;
+          height: 100vh;
+          padding: 1.2vw;
+          gap: 1.2vw;
+          margin-bottom: 1.2vw;
+        }
+
+        .egg {
+          height: 90%;
+          width: auto;
+          max-width: 92%;
+          padding: 0.8vw;
+          border-width: 0.22vw;
+        }
+      }
+
+      @media print {
+        .sheet {
+          width: 100%;
+          height: calc(297mm - 10mm);
+          gap: 1.8mm;
+          break-after: page;
+          page-break-after: always;
+        }
+
+        .egg {
+          width: 95%;
+          padding: 2.4mm;
+          border-width: 1mm;
+        }
+
+        .sheet:last-of-type {
+          break-after: auto;
+          page-break-after: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="sheet">
+      <section class="cell">
+        <div class="egg"><img src="images/тираннозавр.png" alt="тираннозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/трицератопс.png" alt="трицератопс" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/стегозавр.png" alt="стегозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/диплодок.png" alt="диплодок" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/велоцираптор.png" alt="велоцираптор" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/спинозавр.png" alt="спинозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/анкилозавр.png" alt="анкилозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/паразавролоф.png" alt="паразавролоф" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/птеродактиль.png" alt="птеродактиль" /></div>
+      </section>
+    </main>
+    <main class="sheet">
+      <section class="cell">
+        <div class="egg"><img src="images/мозазавр.png" alt="мозазавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/плезиозавр.png" alt="плезиозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/ихтиозавр.png" alt="ихтиозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/дилофозавр.png" alt="дилофозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/пахицефалозавр.png" alt="пахицефалозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/теризинозавр.png" alt="теризинозавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/карнотавр.png" alt="карнотавр" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/галлимим.png" alt="галлимим" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/овираптор.png" alt="овираптор" /></div>
+      </section>
+    </main>
+    <main class="sheet">
+      <section class="cell">
+        <div class="egg"><img src="images/кетцалькоатль.png" alt="кетцалькоатль" /></div>
+      </section>
+      <section class="cell">
+        <div class="egg"><img src="images/микрораптор.png" alt="микрораптор" /></div>
+      </section>
+    </main>
+  </body>
+</html>
