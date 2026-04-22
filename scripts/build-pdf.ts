@@ -5,7 +5,11 @@ import http from 'http';
 import os from 'os';
 import { PDFDocument } from 'pdf-lib';
 
-const filesToProcess = ['популярные.html', 'травоядные.html'];
+const filesToProcess = [
+  'популярные.html', 
+  'травоядные.html', 
+  'водные.html'
+];
 
 // A4 Landscape dimensions
 const A4_WIDTH_PX = 1123;
