@@ -42,10 +42,10 @@ jobs:
         run: npm run build
 
       - name: Publish Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ inputs.tag }}
-          name: ${{ inputs.name || inputs.tag }}
-          files: build/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ inputs.tag }} \
+            --title "${{ inputs.name || inputs.tag }}" \
+            --generate-notes \
+            build/*
