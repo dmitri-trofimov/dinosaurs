@@ -1,37 +1,38 @@
 import fs from 'fs/promises';
 import path from 'path';
-import * as cheerio from 'cheerio';
-import sharp from 'sharp';
 import puppeteer, { Browser } from 'puppeteer';
 import http from 'http';
-
-// 2126px width provides ~1200 DPI for an image printed at 45mm physical width.
-const TARGET_WIDTH = 2126;
+import os from 'os';
+import { PDFDocument } from 'pdf-lib';
 
 const filesToProcess = ['популярные.html', 'травоядные.html'];
 
+// A4 Landscape dimensions
+const A4_WIDTH_PX = 1123;
+const A4_HEIGHT_PX = 794;
+const A4_WIDTH_PT = 841.89;
+const A4_HEIGHT_PT = 595.28;
+
+// Scale factor: 6.25 gives roughly 600 DPI (7018 x 4962 pixels).
+// 7.2 gives roughly 691 DPI (8085 x 5716 pixels), which is the maximum safe value
+// before exceeding common GPU maximum texture limits (8192px).
+const SCALE_FACTOR = 6.25;
+
 async function buildPdfs(): Promise<void> {
-  const tmpImagesDir = path.join(process.cwd(), 'src', '.tmp-images');
-  
-  // Ensure directories exist
-  await fs.mkdir(tmpImagesDir, { recursive: true });
   await fs.mkdir(path.join(process.cwd(), 'build'), { recursive: true });
 
-  // Create a simple HTTP server to serve the files for Windows Chrome
+  // Create a simple HTTP server to serve the source files
   const server = http.createServer(async (req: http.IncomingMessage, res: http.ServerResponse) => {
     try {
       const urlPath = req.url ? decodeURI(req.url) : '';
       const filePath = path.join(process.cwd(), urlPath);
       const content = await fs.readFile(filePath);
+      
       let contentType = 'text/html';
-
-      if (filePath.endsWith('.webp')) {
-        contentType = 'image/webp';
-      } else if (filePath.endsWith('.jpg')) { 
-        contentType = 'image/jpeg';
-      } else if (filePath.endsWith('.png')) {
-        contentType = 'image/png';
-      }
+      if (filePath.endsWith('.webp')) contentType = 'image/webp';
+      else if (filePath.endsWith('.jpg')) contentType = 'image/jpeg';
+      else if (filePath.endsWith('.png')) contentType = 'image/png';
+      else if (filePath.endsWith('.css')) contentType = 'text/css';
 
       res.writeHead(200, { 'Content-Type': contentType });
       res.end(content);
@@ -47,73 +48,75 @@ async function buildPdfs(): Promise<void> {
 
   let browser: Browser | undefined;
   try {
-    browser = await puppeteer.launch({ 
+    const isWsl = os.release().toLowerCase().includes('microsoft');
+    const launchOptions: any = {
       headless: true,
-      executablePath: '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe',
-      userDataDir: 'C:\\Windows\\Temp\\puppeteer_user_data'
-    });
-    const page = await browser.newPage();
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    };
 
+    if (isWsl) {
+      console.log('Detected WSL environment. Using Windows Chrome...');
+      launchOptions.executablePath = '/mnt/c/Program Files/Google/Chrome/Application/chrome.exe';
+      launchOptions.userDataDir = 'C:\\Windows\\Temp\\puppeteer_user_data';
+    } else {
+      console.log('Detected Standard Environment. Using built-in Puppeteer Chromium...');
+    }
+
+    browser = await puppeteer.launch(launchOptions);
+    const page = await browser.newPage();
+    
     for (const filename of filesToProcess) {
       console.log(`\nProcessing ${filename}...`);
-      const sourceHtmlPath = path.join(process.cwd(), 'src', filename);
       const outputPdfName = filename.replace('.html', '.pdf');
       const outputPdfPath = path.join(process.cwd(), 'build', outputPdfName);
 
-      const html = await fs.readFile(sourceHtmlPath, 'utf-8');
-      const $ = cheerio.load(html);
-
-      const images = $('img').toArray();
-
-      for (const img of images) {
-        const origSrc = $(img).attr('src');
-
-        if (!origSrc) {
-          continue;
-        }
-
-        const origImgPath = path.join(process.cwd(), 'src', origSrc);
-        
-        if (origImgPath.endsWith('.png') || origImgPath.endsWith('.jpg') || origImgPath.endsWith('.webp')) {
-          const parsedPath = path.parse(origImgPath);
-          const newImgName = `${parsedPath.name}.png`;
-          const newImgPath = path.join(tmpImagesDir, newImgName);
-          
-          try {
-            await fs.access(newImgPath);
-          } catch {
-            console.log(`  - Optimizing: ${parsedPath.base} -> ${newImgName}`);
-            try {
-              await sharp(origImgPath)
-                .resize({ width: TARGET_WIDTH, withoutEnlargement: true })
-                .png({ effort: 10, compressionLevel: 9 })
-                .toFile(newImgPath);
-            } catch (err: any) {
-              console.error(`    Error processing ${origImgPath}:`, err.message);
-            }
-          }
-          $(img).attr('src', `.tmp-images/${newImgName}`);
-        }
-      }
-
-      const tmpHtmlName = `.tmp-${filename}`;
-      const tmpHtmlPath = path.join(process.cwd(), 'src', tmpHtmlName);
-      await fs.writeFile(tmpHtmlPath, $.html());
+      const htmlContent = await fs.readFile(path.join(process.cwd(), 'src', filename), 'utf-8');
+      const isPortrait = htmlContent.includes('portrait');
       
-      console.log(`  Generating PDF...`);
-      await page.goto(`http://127.0.0.1:${port}/src/${encodeURIComponent(tmpHtmlName)}`, { waitUntil: 'networkidle0' });
+      const currentWidthPx = isPortrait ? A4_HEIGHT_PX : A4_WIDTH_PX;
+      const currentHeightPx = isPortrait ? A4_WIDTH_PX : A4_HEIGHT_PX;
+      const currentWidthPt = isPortrait ? A4_HEIGHT_PT : A4_WIDTH_PT;
+      const currentHeightPt = isPortrait ? A4_WIDTH_PT : A4_HEIGHT_PT;
+
+      await page.setViewport({ 
+        width: currentWidthPx, 
+        height: currentHeightPx, 
+        deviceScaleFactor: SCALE_FACTOR 
+      });
+
+      console.log(`  Loading page...`);
+      await page.goto(`http://127.0.0.1:${port}/src/${encodeURIComponent(filename)}`, { waitUntil: 'networkidle0' });
       
-      await page.pdf({
-        path: outputPdfPath,
-        format: 'A4',
-        printBackground: true,
-        margin: { top: 0, right: 0, bottom: 0, left: 0 }
+      console.log(`  Taking High-Res JPEG screenshot (Scale Factor: ${SCALE_FACTOR})...`);
+      // Capture the screenshot as a JPEG buffer
+      // Not using fullPage: true ensures we get exactly the A4 viewport
+      const jpegBuffer = await page.screenshot({ 
+        type: 'jpeg', 
+        quality: 95,
+      });
+
+      console.log(`  Wrapping screenshot into PDF...`);
+      // Create a new PDF document
+      const pdfDoc = await PDFDocument.create();
+      const image = await pdfDoc.embedJpg(jpegBuffer);
+      
+      // Add a page with the correct dimensions
+      const pdfPage = pdfDoc.addPage([currentWidthPt, currentHeightPt]);
+      
+      // Draw the image onto the entire page
+      pdfPage.drawImage(image, {
+        x: 0,
+        y: 0,
+        width: currentWidthPt,
+        height: currentHeightPt
       });
       
-      console.log(`  PDF successfully created at: ${outputPdfPath}`);
+      // Save the PDF
+      const pdfBytes = await pdfDoc.save();
+      await fs.writeFile(outputPdfPath, pdfBytes);
       
-      // Cleanup the temporary HTML file immediately after we're done with it
-      await fs.unlink(tmpHtmlPath);
+      console.log(`  PDF successfully created at: ${outputPdfPath}`);
+      console.log(`  Final File Size: ${(pdfBytes.length / 1024 / 1024).toFixed(2)} MB`);
     }
   } catch (err: any) {
     console.error('Error during generation:', err);
@@ -122,13 +125,6 @@ async function buildPdfs(): Promise<void> {
       await browser.close();
     }
     server.close();
-    
-    console.log('\nCleaning up temporary image files...');
-    try {
-      await fs.rm(tmpImagesDir, { recursive: true, force: true });
-    } catch (cleanupErr: any) {
-      console.error('Error cleaning up images:', cleanupErr);
-    }
   }
 }
 

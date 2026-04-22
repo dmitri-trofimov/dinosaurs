@@ -15,7 +15,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsx scripts/build-pdf.ts"
+    "build": "npx tsx scripts/build-pdf.ts",
+    "install-system-dependencies": "bash scripts/install-system-dependencies.sh"
   },
   "devDependencies": {
     "@types/node": "25.6.0",
@@ -24,5 +25,8 @@
     "sharp": "0.34.5",
     "tsx": "4.21.0",
     "typescript": "6.0.3"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
   }
 }
