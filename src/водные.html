@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Водные динозавры для печати</title>
+    <style>
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 6mm;
+        width: 297mm;
+        height: 210mm;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), url("images/фон.водные.png");
+        background-size: cover;
+        background-position: top left;
+        background-repeat: no-repeat;
+        background-size: 297mm 210mm;
+      }
+
+      .row {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6mm;
+        align-items: start;
+        margin-top: 5mm;
+      }
+
+      figure {
+        margin: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.65);
+        padding: 5.3mm;
+        border-radius: 5.3mm;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        clip-path: inset(2.5mm 0);
+        margin: -2.5mm 0;
+      }
+
+      figcaption {
+        margin-top: 1mm;
+        font-size: 8mm;
+        line-height: 1.2;
+        word-break: break-word;
+        color: rgb(0, 0, 70);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 16.9mm;
+        margin: 10mm auto 12mm auto;
+        background-color: rgba(255, 255, 255, 0.65);
+        display: table;
+        padding: 2.6mm 10.6mm;
+        border-radius: 5.3mm;
+        color: rgb(0, 0, 70);
+        text-shadow: 0 0 1.6mm rgba(0, 0, 70, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ВОДНЫЕ</h1>
+    <main class="row" style="margin-top: 0">
+      <figure>
+        <img src="images/мозазавр.png" alt="мозазавр" />
+        <figcaption>мозазавр</figcaption>
+      </figure>
+      <figure>
+        <img src="images/эласмозавр.png" alt="эласмозавр" />
+        <figcaption>эласмозавр</figcaption>
+      </figure>
+      <figure>
+        <img src="images/ихтиозавр.png" alt="ихтиозавр" />
+        <figcaption>ихтиозавр</figcaption>
+      </figure>
+      <figure>
+        <img src="images/плиозавр.png" alt="плиозавр" />
+        <figcaption>плиозавр</figcaption>
+      </figure>
+    </main>
+    <main class="row">
+      <figure>
+        <img src="images/кронозавр.png" alt="кронозавр" />
+        <figcaption>кронозавр</figcaption>
+      </figure>
+      <figure>
+        <img src="images/шонизавр.png" alt="шонизавр" />
+        <figcaption>шонизавр</figcaption>
+      </figure>
+      <figure>
+        <img src="images/лиоплевродон.png" alt="лиоплевродон" />
+        <figcaption>лиоплевродон</figcaption>
+      </figure>
+      <figure>
+        <img src="images/плезиозавр.png" alt="плезиозавр" />
+        <figcaption>плезиозавр</figcaption>
+      </figure>
+    </main>
+  </body>
+</html>
