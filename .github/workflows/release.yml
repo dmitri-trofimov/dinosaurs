@@ -41,6 +41,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Package Release Assets
+        run: |
+          cd build
+          zip -r ../dinosaurs.zip ./*
+
       - name: Publish Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -48,4 +53,4 @@ jobs:
           gh release create ${{ inputs.tag }} \
             --title "${{ inputs.name || inputs.tag }}" \
             --generate-notes \
-            build/*
+            dinosaurs.zip
