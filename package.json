@@ -16,6 +16,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsx scripts/build-pdf.ts",
+    "build:previews": "npx tsx scripts/build-previews.ts",
     "install-system-dependencies": "bash scripts/install-system-dependencies.sh"
   },
   "devDependencies": {
