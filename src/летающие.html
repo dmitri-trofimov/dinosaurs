@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Летающие динозавры для печати</title>
+    <style>
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 6mm;
+        width: 297mm;
+        height: 210mm;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), url("images/фон.летающие.png");
+        background-size: cover;
+        background-position: top left;
+        background-repeat: no-repeat;
+        background-size: 297mm 210mm;
+      }
+
+      .row {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6mm;
+        align-items: start;
+        margin-top: 5mm;
+      }
+
+      figure {
+        margin: 0;
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.65);
+        padding: 5.3mm;
+        border-radius: 5.3mm;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        clip-path: inset(2.5mm 0);
+        margin: -2.5mm 0;
+      }
+
+      figcaption {
+        margin-top: 1mm;
+        font-size: 8mm;
+        line-height: 1.2;
+        word-break: break-word;
+        color: rgb(25, 95, 170);
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 16.9mm;
+        margin: 10mm auto 12mm auto;
+        background-color: rgba(255, 255, 255, 0.65);
+        display: table;
+        padding: 2.6mm 10.6mm;
+        border-radius: 5.3mm;
+        color: rgb(25, 95, 170);
+        text-shadow: 0 0 1.6mm rgba(0, 40, 100, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ЛЕТАЮЩИЕ</h1>
+    <main class="row" style="margin-top: 0">
+      <figure>
+        <img src="images/рамфоринх.png" alt="рамфоринх" />
+        <figcaption>рамфоринх</figcaption>
+      </figure>
+      <figure>
+        <img src="images/птеранодон.png" alt="птеранодон" />
+        <figcaption>птеранодон</figcaption>
+      </figure>
+      <figure>
+        <img src="images/тапежара.png" alt="тапежара" />
+        <figcaption>тапежара</figcaption>
+      </figure>
+      <figure>
+        <img src="images/археоптерикс.png" alt="археоптерикс" />
+        <figcaption>археоптерикс</figcaption>
+      </figure>
+    </main>
+    <main class="row">
+      <figure>
+        <img src="images/аланка.png" alt="аланка" />
+        <figcaption>аланка</figcaption>
+      </figure>
+      <figure>
+        <img src="images/птеродактиль.png" alt="птеродактиль" />
+        <figcaption>птеродактиль</figcaption>
+      </figure>
+      <figure>
+        <img src="images/аждархид.png" alt="аждархид" />
+        <figcaption>аждархид</figcaption>
+      </figure>
+      <figure>
+        <img src="images/джунгариптерид.png" alt="джунгариптерид" />
+        <figcaption>джунгариптерид</figcaption>
+      </figure>
+    </main>
+  </body>
+</html>
