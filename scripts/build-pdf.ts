@@ -8,7 +8,8 @@ import { PDFDocument } from 'pdf-lib';
 const filesToProcess = [
   'популярные.html', 
   'травоядные.html', 
-  'водные.html'
+  'водные.html',
+  'летающие.html'
 ];
 
 // A4 Landscape dimensions
