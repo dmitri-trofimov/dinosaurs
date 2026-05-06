@@ -1,14 +1,20 @@
 # AI prompts
 
-## Генерация динозавров
+## Dinosaurs generation workflow
 
-Сгенерируй квадратное фотореалистичное научно-достоверное изображение (как анатомически, так и по цвету) сколозавра, который ничего не делает, строго без посторонних объектов, на строго абсолютно белом фоне, вообще без тени.
+Generate a square photorealistic, scientifically accurate image (both anatomically and in color) of a Triceratops. The image must contain absolutely no external objects and be set against a strictly solid white background with no shadows. Use an engaging perspective and incorporate varied natural coloration while maintaining scientific authenticity.
 
-## Генерация фонов
+Evaluate the anatomical and color accuracy.
 
-### Для травоядных
+Fix inaccuracies.
 
-Сгенерируй изображение пейзажа времени, когда жили динозавры. Строго без фауны. С фокусом на растительность. Размеры изображения - A4 landscape.
+Can it be colored more while maintaining accuracy?
+
+## Backgrounds generation
+
+### For herbivores
+
+Generate an image of a prehistoric landscape from the era of the dinosaurs. Strictly no fauna. Focus on the vegetation. Aspect ratio - A4 landscape.
 
 ### Для водных
 
@@ -17,3 +23,7 @@
 ## Для летающих
 
 Сгенерируй изображение пейзажа времени, когда жили динозавры. Строго без фауны. С фокусом на небо и просторы. Размеры изображения - A4 landscape.
+
+## Для амфибий
+
+Сгенерируй изображение пейзажа времени, когда жили динозавры. Строго без фауны. Должны быть как море, так и берег с растительностью. Размеры изображения - A4 landscape.
