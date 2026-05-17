@@ -7,7 +7,7 @@ import { PDFDocument } from 'pdf-lib';
 
 const filesToProcess = [
   'популярные.html', 
-  'травоядные.html', 
+  'herbivores.html', 
   'водные.html',
   'летающие.html'
 ];
