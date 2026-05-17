@@ -6,9 +6,9 @@ import os from 'os';
 
 // The same pages that are built as PDFs
 const filesToProcess = [
-  'популярные.html',
+  'aquatic.html',
   'herbivores.html',
-  'водные.html',
+  'популярные.html',
   'летающие.html'
 ];
 

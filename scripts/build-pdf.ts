@@ -6,9 +6,9 @@ import os from 'os';
 import { PDFDocument } from 'pdf-lib';
 
 const filesToProcess = [
-  'популярные.html', 
+  'aquatic.html',
   'herbivores.html', 
-  'водные.html',
+  'популярные.html', 
   'летающие.html'
 ];
 
